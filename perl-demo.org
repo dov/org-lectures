@@ -1,0 +1,47 @@
+#+SETUPFILE: htmlslidy.org
+#+TITLE: Perl/Gtk
+#+AUTHOR: Dov Grobgeld
+#+STYLE: <link rel='stylesheet' href='blue.css' type='text/css'  /> <link rel='stylesheet' href='dov.css' type='text/css'  /> 
+#+BIND: org-htmlslidy-html-preamble-footer "<h1>A perl test</h1>"
+#+BIND: org-export-html-preamble "</div><div class='background'><img alt='' id='head-icon' src='graphics/gtk-logo.png' /><img alt='' id='head-logo' src='graphics/dov-logo.png' /></a></object></div>"
+#+BIND: org-export-html-postamble ""
+
+* Perl/Gtk
+Title page
+
+* Perl 
+** A sec list
+- A simple perl program
+ + Another comment
+ + A third comment
+#+begin_src perl
+  #!/usr/bin/perl
+  # A cat -n clone
+  while(<>) {
+      print "$.: $_";
+  }
+  # A long program
+  print <__;
+  this is a long
+  program
+  that
+  I'd like
+  to
+  see how it
+  works out
+  with s5
+  mode
+  does it
+  handle overflow
+  nicely??
+  __
+  
+#+end_src
+
+* Python is nice too!
+#+begin_src python
+print "Hello world"
+#+end_src
+
+* Thanks
+Bye bye!
