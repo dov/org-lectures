@@ -383,10 +383,6 @@ sub my_quit {
 * Styles
 ** Colors and fonts are controlled by styles
 #+begin_src perl
-#!/usr/bin/perl
-
-BEGIN { $ENV{LC_ALL} = "he_IL"; } 
-
 use utf8;   # Needed for Hebrew
 use Gtk2 '-init';
 
@@ -394,7 +390,7 @@ Gtk2::Rc->parse_string(<<__);
 include "/usr/local/share/themes/Bumblebee/gtk-2.0/gtkrc"
     
 style "normal" {
-    font_name ="serif 30"
+    font_name ="David CLM 30"
 }
 
 style "my_entry" {
