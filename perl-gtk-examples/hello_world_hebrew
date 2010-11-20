@@ -1,0 +1,43 @@
+#!/usr/bin/perl
+
+BEGIN { $ENV{LC_ALL} = "he_IL"; } 
+
+use utf8;   # Needed for Hebrew
+use Gtk2 '-init';
+
+my $window = Gtk2::Window->new;
+$window->set_title ("Hello world");
+$window->signal_connect (destroy => sub { Gtk2->main_quit; });
+
+my $vbox = Gtk2::VBox->new();
+$vbox->set("border_width"=> 10);
+$window->add($vbox);
+
+my $label = Gtk2::Label->new("שלום עולם!");
+$vbox->pack_start($label,0,0,5); # expand?, fill?, padding
+
+my $entry = Gtk2::Entry->new();
+$vbox->pack_start($entry,0,0,5); 
+
+my $button = Gtk2::Widget->new("Gtk2::Button",
+			       label=>"יציאה");
+# Note how additional parameters are passed in callback
+$button->signal_connect(clicked=>\&my_quit, [$label, $entry]);
+
+$vbox->pack_start($button, 0,0,5);  
+
+$window->show_all();
+
+Gtk2->main;
+
+sub my_quit {
+    my ($self, $args) = @_;
+    my ($label, $entry) = @$args;
+    
+    $label->set(label=>$entry->get_text());
+    $entry->set_text("");
+    # Add a timeout event
+    Glib::Timeout->add(1500, sub { exit });
+}
+
+	

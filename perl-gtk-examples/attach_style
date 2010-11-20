@@ -1,0 +1,18 @@
+:
+Gtk2::Rc->parse_string(<<__);
+style "big" {
+    font_name ="serif 80"
+}
+
+style "normal" {
+    font_name ="serif 30"
+}
+
+widget "*" style "normal"
+widget "*big*" style "big"
+__
+    
+:
+my $label = Gtk2::Label->new("Name:");
+$label->set_name("big");
+:

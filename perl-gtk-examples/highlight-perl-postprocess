@@ -1,0 +1,13 @@
+#!/usr/bin/perl
+
+######################################################################
+#  The highlight program does a mediocre result with perl files.
+#  This is an attempt to postprocess and fix some of the constructs.
+######################################################################
+
+while(<>) {
+    s/(\w+\s*)\=\&gt;/<span class="str">$1<\/span>=&gt;/g;
+    s/\{(\w+)\}/{<span class="str">$1<\/span>}/g;
+    s/(sub\s*<\/span>)\s*(\w+)/$1<span class="sub">$2<\/span>/g;
+    print;
+}

@@ -1,0 +1,10 @@
+#!/usr/bin/perl
+
+use Gtk2 '-init';
+
+my $window = Gtk2::Window->new;
+my $label = Gtk2::Label->new("Hello world!");
+$window->add($label);
+$window->show_all();
+
+Gtk2->main;

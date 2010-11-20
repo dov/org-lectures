@@ -1,0 +1,113 @@
+#!/usr/bin/perl
+############################################################
+#  Example of animation on the gnome canvas.
+#
+#  Dov Grobgeld
+############################################################
+
+use Gtk2 '-init';
+use Gnome2::Canvas;
+use strict;
+
+my($w_top, $w_canvas);
+my $min_x = 5;
+my $max_x = 500;
+my ($rect_green, $rect_orange);
+
+############################################################
+#  Create the widgets
+############################################################
+sub create_widgets {
+    $w_top = Gtk2::Window->new;
+    $w_top->signal_connect(destroy=> sub { exit });
+
+    my $vbox = Gtk2::VBox->new(0,0);
+    $w_top->add($vbox);
+    
+    $w_canvas = Gnome2::Canvas->new_aa();
+    $vbox->pack_start($w_canvas, 1,1,0);
+    $w_canvas->set_size_request(600, 300);
+    $w_canvas->set_scroll_region(0, 0, 600, 300);
+
+    my $quit = Gtk2::Button->new("Quit");
+    $quit->signal_connect(clicked=> sub { exit });
+    $vbox->pack_start($quit, 0, 0, 0);
+
+    $w_top->show_all();
+}
+
+sub place_objects_on_canvas {
+    my $root = $w_canvas->root();
+    
+    $rect_green = 
+	Gnome2::Canvas::Item->new($root,
+				  "Gnome2::Canvas::Rect",
+				  x1=> 240,
+				  y1=> 90,
+				  x2=> 440,
+				  y2=> 180,
+				  fill_color_rgba=> 0x3cb37180,
+				  outline_color => "black",
+				  width_units =>2.0);
+    # Add user data
+    $rect_green->{dir}=1;
+    $rect_green->{speed}=5;
+    
+    $rect_orange = 
+	Gnome2::Canvas::Item->new($root,
+				  "Gnome2::Canvas::Ellipse",
+				  x1=> 30,
+				  y1=> 150,
+				  x2=> 250,
+				  y2=> 240,
+				  fill_color_rgba=> 0xb3713c80,
+				  outline_color => "black",
+				  width_units =>2.0);
+
+    $rect_orange->{dir} = -1;
+    $rect_orange->{speed} = 8;
+
+    Glib::Timeout->add(10, \&cb_animation_step);
+}
+
+############################################################
+#  Takes one step of the animation. rect_green is moved by
+#  DELTA_Y_GREEN and rect_orange by DELTA_Y_ORANGE. When they
+#  meet the borders, their direction change
+############################################################
+sub cb_animation_step {
+    foreach my $r ($rect_green, $rect_orange) {
+	# Get old values
+	my ($old_x1, $old_x2) = $r->get("x1", "x2");
+
+	# Get user data
+	my $dir = $r->{dir} || 1;
+	my $speed = $r->{speed};
+
+	# Move the object
+	my $new_x1 = $old_x1 + $dir * $speed;
+	my $new_x2 = $old_x2 + $dir * $speed;
+
+	# Check if we hit a wall
+	if ($new_x1 < $min_x || $new_x2 > $max_x) {
+	    $dir = -$dir;
+	    $r->{dir} = $dir;
+	    
+	    $new_x1 = $old_x1 + $dir * $speed;
+	    $new_x2 = $old_x2 + $dir * $speed;
+	}
+
+	# Update new parameter data
+	$r->set(x1 => $new_x1,
+		x2 => $new_x2);
+    }
+
+    # As long as this routine returns TRUE, it will be
+    # called again 
+    return 1;
+}
+
+create_widgets();
+place_objects_on_canvas();
+
+Gtk2->main();

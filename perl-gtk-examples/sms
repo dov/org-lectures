@@ -1,0 +1,46 @@
+#!/usr/bin/perl
+
+BEGIN {
+    $ENV{LC_ALL} = "he_IL";
+}
+
+use Gtk2 -init;
+use Gtk2::GladeXML;
+use strict;
+
+my $receiver;   # Global variable for receiver
+my %db;
+
+sub read_db {
+    open(DB, "<:utf8", "mysms.dat");
+    while(<DB>) {
+	chomp;
+	my($name, $number) = split(/,/);
+	$db{$name} = $number;
+    }
+    close(DB);
+}
+
+# Autoconnect routines
+sub cb_quit {
+    Gtk2->main_quit;
+}
+
+sub on_send_clicked {
+    print "Sending sms to ", $db{$receiver}, "\n";
+}
+
+# main
+read_db();
+my $gladexml = Gtk2::GladeXML->new('sms.glade');
+$gladexml->signal_autoconnect_from_package('main');
+
+my $menu = $gladexml->get_widget('optionmenu1')->get_menu;
+for my $name (sort keys %db) {
+    my $item = Gtk2::MenuItem->new("$name - " . $db{$name});
+    $item->signal_connect(activate => sub { $receiver = $name });
+    $item->show();
+    $menu->append($item);
+}
+
+Gtk2->main;

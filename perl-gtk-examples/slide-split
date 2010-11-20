@@ -1,0 +1,40 @@
+#!/usr/bin/perl
+
+my $slide;
+my $slide_num;
+while(<>) {
+    if (/^<!--\s+Slide:\s(\d+) !-->/) {
+	ship_slide() if $slide;
+	$slide_num = $1;
+	$slide = "";
+	next;
+    }
+    if (/^<!--end-->/) {
+	$end++;
+	ship_slide();
+	last;
+    }
+    $slide .= $_ if $slide_num > 0;
+}
+
+sub ship_slide {
+    print STDERR "shipping slide $slide_num\n";
+    open(SLIDE, ">slide-$slide_num.html");
+    print SLIDE qq{<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">\n}
+               .qq{<head>}
+               .qq{<link rel="stylesheet" type="text/css" href="dovhighlight.css">}
+               .qq{<title>Slide $slide_num</title></head>\n}
+               .qq{<body>\n};
+    print SLIDE "<table width=100%>\n<tr><td align=left width=33%>\n";
+    print SLIDE "<a href=\"slide-" . ($slide_num-1) . ".html\">&lt;prev</a>" if $slide_num > 1;
+    print SLIDE "</td>\n";
+    print SLIDE "<td align=center width=33%>Slide $slide_num</td>\n";
+    print SLIDE "<td align=right width=33%>&nbsp;\n";
+    print SLIDE "<a href=slide-" . ($slide_num+1) . ".html>next&gt;</a>" unless $end;
+    print SLIDE "</td></tr></table><hr><br>\n";
+    
+    print SLIDE $slide;
+    print SLIDE "</body></html>\n";
+    close(SLIDE);
+}
+
