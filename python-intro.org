@@ -1,0 +1,84 @@
+#+SETUPFILE: htmlslidy.org
+#+TITLE: Python Intro
+#+AUTHOR: Dov Grobgeld
+#+STYLE: <link rel='stylesheet' href='blue.css' type='text/css'  /> <link rel='stylesheet' href='dov.css' type='text/css'  /> 
+#+BIND: org-htmlslidy-html-preamble-footer "<h1>Python Intro</h1>"
+#+BIND: org-export-html-preamble "</div><div class='background'><img alt='' id='head-icon' src='graphics/python.png' width=100/><img alt='' id='head-logo' src='graphics/dov-logo.png' /></a></object></div>"
+#+BIND: org-export-html-postamble ""
+
+* Intro
+ - Free as in bear and speech (libre)
+ - Popularity grows in last few years.
+ - Simpler than other similarly niched language, e.g. Perl
+ - My favorite language for intro to programming.
+ - Lectures based on the book "Learning Python"
+ 
+* How to run
+- The python interpreter
+- You can create text with any editor
+- A few IDE's - None perfect.
+- Can be used interactively.
+
+* Interactive session 1
+ - Can be ran through "ipython" command or in IDE.
+ - As a calculator
+#+begin_example
+>>> print "Hello"
+Hello
+>>> print 42*59
+2478
+#+end_example
+
+ - Immediate errors
+#+begin_example
+>>> foo()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'foo' is not defined
+#+end_example
+
+* Interactive session 2
+ - May import modules and use these
+#+begin_example
+>>> import math
+>>> math.sin(math.pi/4)**2
+0.49999999999999989
+>>> from math import *
+>>> sin(pi/4)**2
+#+end_example
+
+* Creating python source file
+ - Create in any text file, example foo.txt .
+#+begin_src python
+import math
+
+for i in range(5):
+   x = 1.0*i/20
+   y = math.sin(x)
+   print x,",",y
+#+end_src
+
+* Running python source from the command line
+#+begin_example 
+c:\> cd my_python
+c:\> python foo.py
+> python foo.py 
+0.0 , 0.0
+0.05 , 0.0499791692707
+0.1 , 0.0998334166468
+0.15 , 0.149438132474
+0.2 , 0.198669330795
+#+end_example
+  
+* Basic syntax
+ - Variables
+  + string (str), integer (int), floating point (float)
+  + Sometimes auto conversions.
+ - Flow control
+  + if, while, for
+ - Functions
+  + def 
+  
+* More functionality
+ - File I/O
+ - Modules.
