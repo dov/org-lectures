@@ -3,10 +3,11 @@
 #+AUTHOR: Dov Grobgeld
 #+STYLE: <link rel='stylesheet' href='blue.css' type='text/css'  /> <link rel='stylesheet' href='dov.css' type='text/css'  /> 
 #+BIND: org-htmlslidy-html-preamble-footer "<h1>Python Intro</h1>"
-#+BIND: org-export-html-preamble "</div><div class='background'><img alt='' id='head-icon' src='graphics/python.png' width=100/><img alt='' id='head-logo' src='graphics/dov-logo.png' /></a></object></div>"
+#+BIND: org-export-html-preamble "</div><div class='background'><img alt='' id='head-icon' src='graphics/python-logo.png'/><img alt='' id='head-logo' src='graphics/dov-logo.png' /></a></object></div>"
 #+BIND: org-export-html-postamble ""
 
-* Intro
+* Intro to Python
+ - Written by Guido van Rossum in late 80s, currently employed by Google.
  - Free as in bear and speech (libre)
  - Popularity grows in last few years.
  - Simpler than other similarly niched language, e.g. Perl
@@ -15,8 +16,17 @@
  
 * How to run
 - The python interpreter
+#+begin_example 
+c:> python
+Python 2.6.2 (r262:71600, Jan 25 2010, 18:46:45) 
+[GCC 4.4.2 20091222 (Red Hat 4.4.2-20)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 
+#+end_example
 - You can create text with any editor
 - A few IDE's - None perfect.
+ + IDLE 
+ + Spyder
 - Can be used interactively.
 
 * Interactive session 1
