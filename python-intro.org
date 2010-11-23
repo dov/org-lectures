@@ -83,12 +83,74 @@ c:\> python foo.py
 * Basic syntax
  - Variables
   + string (str), integer (int), floating point (float)
+  + tuples 
+  + lists
+  + dictionaries
   + Sometimes auto conversions.
  - Flow control
   + if, while, for
  - Functions
   + def 
   
-* More functionality
- - File I/O
- - Modules.
+* String interpolation
+ - Strings are formatted through ~"string"%(parameters)~ .
+ - Example
+#+begin_src python
+print "Pm = %.3fW Isc=%.2fA"%(Pm,Isc)
+#+end_src
+ - Formatting:
+  + %d - Integer
+  + %s - String
+  + %s - Floating point
+ 
+* File IO
+ - Function ~fh = open("foo.txt")~ opens a file for reading
+ - Function ~fh = open("foo.txt","w")~ opens a file for writing
+ - Close a file through ~fh.close()~
+ - Write through ~fh.write(string)~
+
+* Modules
+ - Pulling in additional functionality
+ - E.g. math libraries:
+#+begin_example 
+import math
+#+end_example
+ - Python has a huge set of standard modules. Examples:
+  + os - Operating system interface.
+  + sys - System routines.
+  + datetime - Date and time manipulation
+  + re - Regular expressions - string matching.
+  + httplib - http client for pulling data off the internet.
+ - Lots of modules are available from the internet.
+
+* Classes - Object oriented programming:
+ - A class encapsulates data and provide accessors for getting it and calculating based on the contained data.
+ - Example
+#+begin_src python 
+import datetime
+# Creation of a date time initialized to todays date
+d = datetime.datetime.now()
+# Member access
+print d.year
+print d.isoformat()
+week_day_names = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+print week_day_names[d.weekday()]
+#+end_src
+
+* TCP/IP communication
+ - Easy to open sockets and interact through python.
+ - This simple method does not take care of dead locks and timeouts!
+#+begin_src python
+sh = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+address,port = "192.168.16.21", 86
+sh.connect(((address,port))
+sh.write("d1\n")
+reply = sh.recv(1024)
+print reply
+#+end_src
+
+* Interesting classes from the internet for solar simulations
+ - astral - Calculations for the position of the sun
+ - numpy, scipy - Scientific python
+ - matplotlib - Scientific quality graphics
+ 
