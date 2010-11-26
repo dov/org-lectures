@@ -45,6 +45,11 @@ Gtk2->main;
 
 * Callbacks
 - callbacks define behavior on events.
+- connect to event handler through ~signal_connect(signal, callback, user_data)~
+- signal handlers receive:
+  + widget
+  + event details
+  + user data
 #+begin_src perl
 use Gtk2 '-init';
 
@@ -97,8 +102,8 @@ Gtk2->main;
 
 #+results:
 : 
-* Why are perl objects not enough?
-- No signals.
+* Why are perl objects not sufficient?
+- Can't receive signals.
 - No properties (set() and get())
 - But "real" widgets are hairy. Example from the perl gtk manual.
 #+begin_src perl
@@ -521,7 +526,7 @@ Gtk2->main;
 * The GooCanvas widget
 - Several competing canvas widgets.
 #+begin_src perl
-#!/usr/bin/perl
+,#!/usr/bin/perl
 
 use Gtk2 '-init';
 use Gnome2::Canvas;
@@ -547,7 +552,7 @@ sub create_widgets {
     $w_top->show_all();
 }
 
-# Callback for moving items on the canvas
+,# Callback for moving items on the canvas
 my ($dragging, $last_x, $last_y);   # item_move static data
 sub item_move {
     my($item, $event) = @_;
@@ -604,7 +609,7 @@ place_objects_on_canvas();
 Gtk2->main();
 #+end_src
 
-* Animation on the canvas
+* Timer events and animation on the canvas
 #+begin_src perl
 #!/usr/bin/perl
 ############################################################
@@ -723,6 +728,9 @@ Gtk2->main();
 #+end_src
 [[file:graphics/canvas_motion.png]]
 
+* Additional issues
+ - GIR - Gobject Introspection
+ - New bindings based on this
 * References
 - Gtk Documentation.
 - GooCanvas documentation.
